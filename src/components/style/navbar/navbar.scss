@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Rubik+Mono+One&display=swap");
+.main-nav {
+  min-width: 99vw;
+  height: 80px;
+  background-color: #f2f1ef;
+}
+
+.site-logo {
+  // font-family: "Lato", sans-serif;
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 1vw;
+  // min-width: 12rem;
+  // max-width: 28rem;
+  // max-height: auto;
+  box-sizing: border-box;
+  // color: #fff;
+}
+
+.nav-item .nav-link {
+  font-size: 0.8vw;
+  font-weight: 500;
+  transition: 0.2s ease;
+  border-bottom: 2px solid transparent;
+  padding: 1.5rem 0.5rem;
+  // color: #fff !important;
+  &:hover {
+    border-bottom: 2px solid #2d2e31;
+    color: #161618 !important;
+  }
+  .active {
+    color: #161618 !important;
+  }
+
+  .nav-btns {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #f9f9f8;
+    border: 4px solid #000 !important;
+    box-shadow: 4px 4px 1px 0px rgba(244, 119, 94, 0.9);
+    transition: 0.2s ease-in-out;
+    &:hover {
+      background-color: #000;
+      color: #f4775e;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.footer-container {
+  // background-color: #274c77;
+  border-top: 1px solid #2d2e3151 !important;
+}
+
+.list-group-item {
+  // color: #fff !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  &:hover {
+    color: #000000;
+  }
+}
+
+.address-footer,
+.text-footer {
+}
