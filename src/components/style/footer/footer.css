@@ -8,4 +8,15 @@
 }
 .list-group-item:hover {
   color: #000000;
+}
+
+.waze-logo,
+.maps-logo {
+  max-width: 10vw;
+}
+@media screen and (max-width: 600px) {
+  .waze-logo,
+.maps-logo {
+    max-width: 50vw;
+  }
 }/*# sourceMappingURL=footer.css.map */

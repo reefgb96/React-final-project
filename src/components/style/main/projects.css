@@ -10,4 +10,16 @@
   max-width: 15vw !important;
   background-color: #e8e5dd !important;
   align-items: center;
+}
+@media screen and (max-width: 600px) {
+  .project-cards {
+    max-width: 100% !important;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .link-btn {
+    font-size: 12px !important;
+  }
 }/*# sourceMappingURL=projects.css.map */

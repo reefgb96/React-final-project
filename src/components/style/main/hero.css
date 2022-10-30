@@ -20,7 +20,6 @@
 .portrait .hero-img:hover {
   transform: rotateY(180deg);
 }
-
 .hero-intro h1 {
   font-size: 4.68vw;
   font-weight: 700;

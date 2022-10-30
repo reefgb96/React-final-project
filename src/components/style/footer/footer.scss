@@ -12,6 +12,20 @@
   }
 }
 
-.address-footer,
-.text-footer {
+// .address-footer,
+// .text-footer {
+// }
+
+.site-logo {
+  @media screen and(max-width:600px) {
+    // font-size: 8px !important;
+  }
+}
+
+.waze-logo,
+.maps-logo {
+  max-width: 10vw;
+  @media screen and(max-width:600px) {
+    max-width: 50vw;
+  }
 }

@@ -5,19 +5,6 @@ const AboutPage = () => {
   return (
     <div>
       <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
-      <About />
     </div>
   );
 };

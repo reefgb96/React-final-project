@@ -10,6 +10,11 @@
   font-size: 1vw;
   box-sizing: border-box;
 }
+@media screen and (max-width: 600px) {
+  .site-logo {
+    font-size: 3vw;
+  }
+}
 
 .nav-item .nav-link {
   font-size: 0.8vw;

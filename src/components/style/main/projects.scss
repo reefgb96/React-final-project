@@ -11,4 +11,14 @@
   background-color: #e8e5dd !important;
   align-items: center;
   //   background-color: aquamarine !important;
+  @media screen and(max-width:600px) {
+    max-width: 100% !important;
+    text-align: center;
+  }
+}
+
+.link-btn {
+  @media screen and(max-width:600px) {
+    font-size: 12px !important;
+  }
 }

@@ -1,0 +1,10 @@
+.demo-card {
+  max-width: 45%;
+  min-width: 45%;
+}
+@media screen and (max-width: 600px) {
+  .demo-card {
+    max-width: 80%;
+    min-width: 80%;
+  }
+}/*# sourceMappingURL=demoCard.css.map */
