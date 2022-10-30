@@ -13,7 +13,7 @@ const Footer = () => {
       } `}
     >
       <div className="container text-center h-100">
-        <div className={`row h-50 border-bottom ${mobileScreen || "py-2"}`}>
+        <div className={`row h-50 border-bottom ${!mobileScreen || "py-2"}`}>
           <ul className="col d-flex flex-column align-items-center justify-content-around">
             <Link to="/" className="list-group-item">
               Home
@@ -59,7 +59,7 @@ const Footer = () => {
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/720/720256.png"
                   alt="waze-logo"
-                  className={`waze-logo ${mobileScreen && "w-50" && "w-25"}`}
+                  className={`waze-logo ${!mobileScreen && "w-50" && "w-25"}`}
                 />
               </a>
               <a
@@ -71,11 +71,10 @@ const Footer = () => {
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/355/355980.png"
                   alt="google-maps-logo"
-                  className={`maps-logo ${mobileScreen && "w-50" && "w-25"}`}
+                  className={`maps-logo ${!mobileScreen && "w-50" && "w-25"}`}
                 />
               </a>
             </div>
-            {/* add external google maps/ waze link */}
           </div>
           <div className="col d-flex flex-column justify-content-center align-items-center">
             <h1 className="site-logo fs-3">{logo}™</h1>

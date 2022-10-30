@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik+Mono+One&display=swap");
+.reg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  min-width: 100%;
+}
+
+.register {
+  color: #e8e5dd;
+  font-size: 8vw;
+  letter-spacing: 5.5vw;
+  line-height: 32vh;
+  font-weight: 800;
+  font-family: "Rubik Mono One", sans-serif;
+}
+
+.login-form {
+  z-index: 1000;
+}/*# sourceMappingURL=registerPage.css.map */
