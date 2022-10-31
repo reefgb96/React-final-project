@@ -19,10 +19,10 @@
   box-shadow: 12px 12px 1px 0px rgba(244, 119, 94, 0.9) !important;
   transition: 0.2s ease-in-out;
 }
-.login-form:hover {
+/* .login-form:hover {
   background-color: #000;
   color: #f4775e;
-}
+} */
 
 .form-wrapper {
   background-color: #2d2e31 !important;
@@ -56,4 +56,4 @@
     min-width: 90vw !important;
     max-width: 100vw !important;
   }
-}/*# sourceMappingURL=loginPage.css.map */
+} /*# sourceMappingURL=loginPage.css.map */

@@ -9,7 +9,11 @@ const HeroHomePage = () => {
   return (
     <div className={`container-fluid d-flex ${!mobileScreen || "px-5"}`}>
       <div className="hero-intro d-flex flex-column justify-content-evenly">
-        <div className="hero-title d-flex align-items-end h-50 justify-content-center">
+        <div
+          className={`hero-title d-flex align-items-end h-50 ${
+            mobileScreen || "justify-content-center"
+          } `}
+        >
           <h1
             className={`${mobileScreen || "fs-1 text-center my-5"}  text-wrap`}
           >

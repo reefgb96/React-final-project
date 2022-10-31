@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.scss";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 // import { authActions } from "./store/auth";
 import jwt_decode from "jwt-decode";
@@ -22,8 +22,8 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer />
       <NavBar />
+      <ToastContainer />
       <Switch>
         <Route path="/" exact component={HomePage}></Route>
         <Route path="/about" component={AboutPage}></Route>

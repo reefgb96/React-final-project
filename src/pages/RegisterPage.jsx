@@ -1,7 +1,97 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../components/style/pages/registerPage.css";
 
 const RegisterPage = () => {
+  const history = useHistory();
+  const [registerInput, setRegisterInput] = useState({
+    nameInput: "",
+    emailInput: "",
+    passwordInput: "",
+    passwordInput2: "",
+    // profilePicInput: "",
+    bizInput: false,
+  });
+
+  const handleUserInputChange = (ev) => {
+    let newRegisterInput = JSON.parse(JSON.stringify(registerInput));
+    if (newRegisterInput.hasOwnProperty(ev.target.id)) {
+      newRegisterInput[ev.target.id] = ev.target.value;
+      setRegisterInput(newRegisterInput);
+    }
+  };
+
+  const handleCheckBoxInputChange = (ev) => {
+    let newRegisterInput = JSON.parse(JSON.stringify(registerInput));
+    if (newRegisterInput.hasOwnProperty(ev.target.id)) {
+      newRegisterInput[ev.target.id] = ev.target.checked;
+      setRegisterInput(newRegisterInput);
+    }
+  };
+
+  const WrongPass = () => {
+    // ev.preventDefault();
+    toast("🦄 Passwords dont match!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const handleSubmitRegister = (ev) => {
+    ev.preventDefault();
+    handleRegister();
+  };
+
+  const handleRegister = (ev) => {
+    registerInput &&
+    registerInput.passwordInput === registerInput.passwordInput2
+      ? axios
+          .post("/users/register", {
+            name: registerInput.nameInput,
+            email: registerInput.emailInput,
+            password: registerInput.passwordInput,
+            biz: registerInput.bizInput,
+            // profilePic: registerInput.profilePicInput,
+          })
+          .then((res) => {
+            toast(`🦄Thank you for registering!`, {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              history.push("/login");
+            }, 2000);
+          })
+          .catch((err) => {
+            // console.log("err", err);
+            toast(`🦄 ${err.response.data}!`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          })
+      : WrongPass();
+  };
+
   const mobileScreen = window.innerWidth >= 600;
 
   return (
@@ -16,13 +106,16 @@ const RegisterPage = () => {
             </div>
           )}
           <div className="col container-login d-flex justify-content-center ">
-            <form className="login-form w-50 m-4 p-5 border bg-light">
+            <form
+              className="login-form w-50 m-4 p-5 border bg-light"
+              onSubmit={handleSubmitRegister}
+            >
               <div className="form-title d-flex justify-content-center">
                 <h1 className="mb-5 fw-semibold">Sign Up</h1>
               </div>
               <div className="mb-3">
                 <label
-                  for="exampleInputEmail1"
+                  htmlFor="nameInput"
                   className="mb-3 form-label name-label"
                 >
                   Full Name
@@ -30,13 +123,15 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   className="mb-5 form-control name-input"
-                  id="exampleInputEmail1"
+                  id="nameInput"
                   aria-describedby="emailHelp"
+                  value={registerInput.nameInput}
+                  onChange={handleUserInputChange}
                 />
               </div>
               <div className="mb-3">
                 <label
-                  for="exampleInputEmail1"
+                  htmlFor="emailInput"
                   className="mb-3 form-label email-label"
                 >
                   Email address
@@ -44,13 +139,15 @@ const RegisterPage = () => {
                 <input
                   type="email"
                   className="mb-5 form-control email-input"
-                  id="exampleInputEmail1"
+                  id="emailInput"
                   aria-describedby="emailHelp"
+                  value={registerInput.emailInput}
+                  onChange={handleUserInputChange}
                 />
               </div>
               <div className="mb-3">
                 <label
-                  for="exampleInputPassword1"
+                  htmlFor="passwordInput"
                   className="form-label pass-label"
                 >
                   Password
@@ -58,10 +155,12 @@ const RegisterPage = () => {
                 <input
                   type="password"
                   className="mt-2 mb-5 form-control pass-input"
-                  id="exampleInputPassword1"
+                  id="passwordInput"
+                  value={registerInput.passwordInput}
+                  onChange={handleUserInputChange}
                 />
                 <label
-                  for="exampleInputPassword1"
+                  htmlFor="passwordInput2"
                   className="form-label pass-label"
                 >
                   Repeat Password
@@ -69,23 +168,34 @@ const RegisterPage = () => {
                 <input
                   type="password"
                   className="mt-2 mb-5 form-control pass-input"
-                  id="exampleInputPassword1"
+                  id="passwordInput2"
+                  value={registerInput.passwordInput2}
+                  onChange={handleUserInputChange}
                 />
-                <label for="formFile" class="form-label">
+                {/* <label htmlFor="profilePicInput" className="form-label">
                   Profile picture
                 </label>
-                <input class="form-control" type="file" id="formFile" />
+                <input
+                  className="form-control"
+                  type="file"
+                  id="profilePicInput"
+                  value={registerInput.profilePicInput}
+                  onChange={handleUserInputChange}
+                /> */}
               </div>
-              <div class="my-5 form-check d-flex justify-content-between">
+              <div className="my-5 form-check d-flex justify-content-between">
                 <div className="remember-me-check">
                   <input
                     type="checkbox"
                     className=" form-check-input"
-                    id="exampleCheck1"
+                    id="bizInput"
+                    value=""
+                    checked={registerInput.bizInput}
+                    onChange={handleCheckBoxInputChange}
                   />
                   <label
                     className=" form-check-label justify-self-start"
-                    for="exampleCheck1"
+                    htmlFor="bizInput"
                   >
                     Register as business account?
                   </label>
