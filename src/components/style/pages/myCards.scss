@@ -1,0 +1,66 @@
+.biz-card {
+  width: 25% !important;
+  transition: 0.25s ease-in-out !important;
+  border-radius: 0 !important;
+  @media screen and(max-width:750px) {
+    min-width: 85% !important;
+    max-width: 100% !important;
+  }
+
+  .card-btns {
+    position: absolute;
+    top: 40%;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease-in-out;
+    z-index: 100;
+    @media screen and(max-width:750px) {
+      top: 10%;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      min-width: 40%;
+      max-width: 40%;
+    }
+  }
+}
+.show {
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: 0.25s ease-in-out;
+}
+
+.create-card-btn {
+  min-width: 25% !important;
+  max-width: 50% !important;
+  @media screen and(max-width:750px) {
+    min-width: 80% !important;
+    max-width: 80% !important;
+  }
+}
+
+.btn-link {
+  text-decoration: none !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #2d2e31 !important;
+  background-color: rgba(244, 119, 94, 1) !important;
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: 0px 0px 4px 4px rgba(255, 255, 255, 0.1);
+  transition: 0.2s ease-in-out;
+  &:hover {
+    background-color: #f2f1ef !important;
+    color: #f4775e !important;
+  }
+}
