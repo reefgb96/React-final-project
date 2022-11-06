@@ -1,0 +1,8 @@
+.edit-input {
+  min-width: 50%;
+  max-width: 50%;
+  @media screen and(max-width: 600px) {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}

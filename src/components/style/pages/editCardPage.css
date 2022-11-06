@@ -1,0 +1,10 @@
+.edit-input {
+  min-width: 50%;
+  max-width: 50%;
+}
+@media screen and (max-width: 600px) {
+  .edit-input {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}/*# sourceMappingURL=editCardPage.css.map */

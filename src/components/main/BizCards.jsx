@@ -12,7 +12,8 @@ const BizCards = ({
   id,
   onDelete,
   itemKey,
-  navigateTo,
+  moreInfoLink,
+  editCardLink,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -62,11 +63,11 @@ const BizCards = ({
             <div
               className={`card-btns w-100 text-center ${isHovering && "show"}`}
             >
-              <Link to={"/editCard"} className="btn-link btn mx-2">
+              <Link to={`/edit/${editCardLink}`} className="btn-link btn mx-2">
                 🖋 Edit
               </Link>
               <Link
-                to={`/card/${navigateTo}`}
+                to={`/card/${moreInfoLink}`}
                 className="btn-link btn mx-2 my-2"
                 id={id}
               >

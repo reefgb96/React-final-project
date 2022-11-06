@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BizCards from "components/main/BizCards";
+import "../components/style/pages/moreInfoPage.css";
 
 let initialCardData = [];
 const MoreInfoPage = () => {
@@ -15,7 +16,6 @@ const MoreInfoPage = () => {
         let { data } = await axios.get(`/cards/card/${id}`);
         initialCardData = data;
         setCardInfo(initialCardData);
-        console.log(cardInfo);
       } catch {
         toast.error("😭 Something went wrong", {
           position: "top-right",
@@ -27,53 +27,39 @@ const MoreInfoPage = () => {
           progress: undefined,
         });
       }
-      console.log(cardInfo);
       console.log(initialCardData);
     })();
   }, []);
 
-  return (
-    <div>
-      {
-        // cardInfo.map((item) => {
-        //   return (
-        <BizCards
-          name={cardInfo.title}
-          imgSrc={cardInfo.image}
-          imgAlt={cardInfo.image}
-          subtitle={cardInfo.subTitle}
-          desc={cardInfo.description}
-          phone={cardInfo.phone}
-          address={cardInfo.address}
-          id={cardInfo._id}
-          key={`card-key-${cardInfo._id}`}
-          navigateTo={cardInfo._id}
-        />
-        //   )
+  let newCardInfo = JSON.parse(JSON.stringify(cardInfo));
+  // let dateCreated = newCardInfo.createdAt.replaceAll("-", " ").slice(0, 10);
 
-        // })
-      }
-    </div>
+  return (
+    <>
+      <Link to="/my-cards" className="btn-back">
+        ⬅ Go back
+      </Link>
+      <div className="d-flex flex-column align-items-center justify-content-center p-5">
+        <h1 className="mb-5">Business Card: {newCardInfo.title}</h1>
+        {/* <h5 className="mb-5">Created at: {dateCreated}</h5> */}
+        {
+          <BizCards
+            name={newCardInfo.title}
+            imgSrc={newCardInfo.image}
+            imgAlt={newCardInfo.image}
+            subtitle={newCardInfo.subTitle}
+            desc={newCardInfo.description}
+            phone={newCardInfo.phone}
+            address={newCardInfo.address}
+            id={newCardInfo._id}
+            key={`card-key-${newCardInfo._id}`}
+            moreInfoLink={newCardInfo._id}
+            editCardLink={newCardInfo._id}
+          />
+        }
+      </div>
+    </>
   );
 };
 
 export default MoreInfoPage;
-{
-  /* {cardInfo &&
-  cardInfo.map((item) => {
-    <div class="card" style="width: 18rem;">
-      <img
-        src={item.image.url}
-        class="card-img-top"
-        alt={cardInfo.name}
-      />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up
-          the bulk of the card's content.
-        </p>
-      </div>
-    </div>;
-  })} */
-}

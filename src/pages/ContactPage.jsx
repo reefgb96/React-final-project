@@ -1,7 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import Iframe from "react-iframe";
+import { useHistory } from "react-router-dom";
+import validate from "validation/validation";
+import ContactSchema from "validation/contact.validation";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
+  const [msgInput, setMsgInput] = useState({
+    name: "",
+    email: "",
+    msg: "",
+  });
+  const [errors, setErrors] = useState([]);
+  const history = useHistory();
+  let newMsgInput = JSON.parse(JSON.stringify(msgInput));
+
+  const handleMsgInputChange = (ev) => {
+    newMsgInput[ev.target.id] = ev.target.value;
+    setMsgInput(newMsgInput);
+  };
+
+  const handleContactSubmit = (ev) => {
+    ev.preventDefault();
+    const { error } = validate(msgInput, ContactSchema);
+    if (error) {
+      setErrors(error.details);
+      let errorMsgs = "";
+      for (let errorItem of error.details) {
+        switch (errorItem.type) {
+          case "any.empty":
+            errorMsgs += `${errorItem.message}. `;
+            break;
+          case "string.max":
+            errorMsgs += `${errorItem.context.label} length must be at least ${errorItem.context.limit} characters long, `;
+            break;
+          default:
+            errorMsgs += "something went wrong,";
+            break;
+        }
+      }
+      return;
+    }
+    setMsgInput({
+      name: "",
+      email: "",
+      msg: "",
+    });
+    toast("🦄 Thanks for your message!", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => {
+      history.push("/");
+    }, 2500);
+  };
+
   return (
     <div className="container my-5">
       <div className="row">
@@ -26,45 +84,58 @@ const ContactPage = () => {
           />
         </div>
         <div className="col-4">
-          <div className="login-form p-5">
+          <form onSubmit={handleContactSubmit} className="login-form p-5">
             <h1 className="mb-5 text-center">Leave a message</h1>
             <div className="mb-4">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label htmlFor="name" className="form-label">
                 Full Name
               </label>
               <input
                 type="text"
                 className="form-control rounded-0"
-                id="exampleFormControlInput1"
-                placeholder="Jhon Doe"
+                id="name"
+                value={msgInput.name}
+                onChange={handleMsgInputChange}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="exampleFormControlInput2" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email address
               </label>
               <input
                 type="email"
                 className="form-control rounded-0"
-                id="exampleFormControlInput2"
-                placeholder="name@example.com"
+                id="email"
+                value={msgInput.email}
+                onChange={handleMsgInputChange}
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="exampleFormControlTextarea1"
-                className="form-label"
-              >
+              <label htmlFor="msg" className="form-label">
                 Example textarea
               </label>
               <textarea
                 className="form-control rounded-0"
-                id="exampleFormControlTextarea1"
+                id="msg"
                 rows="6"
+                value={msgInput.msg}
+                onChange={handleMsgInputChange}
               ></textarea>
             </div>
             <button className="form-send-btn w-25">Send</button>
-          </div>
+            <div className="err-msg my-4">
+              <ul>
+                {errors &&
+                  errors.map((item, idx) => {
+                    return (
+                      <li key={"error-key-" + idx} className="text-danger my-1">
+                        {item.message}.
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          </form>
         </div>
       </div>
     </div>

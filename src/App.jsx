@@ -17,6 +17,8 @@ import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
 import BizRegisterPage from "pages/BizRegisterPage";
 import MoreInfoPage from "pages/MoreInfoPage";
+import EditCardPage from "pages/EditCardPage";
+import CreateCardPage from "pages/CreateCardPage";
 
 const App = () => {
   // implement auto login.
@@ -32,6 +34,8 @@ const App = () => {
         <Route path="/Succuss-stories" component={SuccussStoriesPage} />
         <Route path="/my-cards" component={MyCardsPage}></Route>
         <Route path="/card/:id" component={MoreInfoPage}></Route>
+        <Route path="/edit/:id" component={EditCardPage}></Route>
+        <Route path="/createCard" component={CreateCardPage}></Route>
         {/* "MyCardsPage" link visible **ONLY IF LOGGED IN** 👆 */}
         <Route path="/login" component={LoginPage}></Route>
         {/* "LoginPage" link visible **ONLY IF LOGGED OUT** 👆 */}

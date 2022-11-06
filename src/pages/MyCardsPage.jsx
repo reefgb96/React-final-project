@@ -103,7 +103,8 @@ const MyCardsPage = () => {
                 onDelete={handleBizCardDelete}
                 // itemKey={`card-key-${item._id}`}
                 key={`card-key-${item._id}`}
-                navigateTo={item._id}
+                moreInfoLink={item._id}
+                editCardLink={item._id}
               />
             );
           })}

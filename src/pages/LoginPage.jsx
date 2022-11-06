@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 // import Joi from "joi-browser";
@@ -26,6 +26,9 @@ const LoginPage = () => {
     let newLoginInput = JSON.parse(JSON.stringify(loginInput));
     newLoginInput[ev.target.id] = ev.target.checked;
     setLoginInput(newLoginInput);
+    ev.target.checked
+      ? localStorage.setItem("stayLoggedin", true)
+      : localStorage.removeItem("stayLoggedin");
   };
 
   const handleSubmitLogIn = (ev) => {
@@ -35,14 +38,14 @@ const LoginPage = () => {
       let errorMsgs = "";
       for (let errorItem of error.details) {
         switch (errorItem.type) {
-          case "string.min":
-            errorMsgs += `${errorItem.context.label} length must be at least ${errorItem.context.limit} characters long, `;
+          case "any.empty":
+            errorMsgs += `${errorItem.message}., `;
             break;
           case "string.max":
             errorMsgs += `${errorItem.context.label} length must be at least ${errorItem.context.limit} characters long, `;
             break;
           default:
-            errorMsgs += "something went wrong,";
+            errorMsgs += "Email or password are Invalid.";
             break;
         }
       }
@@ -72,7 +75,7 @@ const LoginPage = () => {
           progress: undefined,
         });
         setTimeout(() => {
-          history.push("/");
+          history.push("/my-cards");
         }, 2000);
       })
       .catch((err) => {
