@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "../style/main/lengLogos.css"
+import "../style/main/lengLogos.css";
 
 const LengLogos = () => {
   const [logosData, setLogosData] = useState([]);
+  const mobileScreen = window.innerWidth >= 600;
 
   const logosArr = [
     {
@@ -27,6 +28,11 @@ const LengLogos = () => {
       altName: "react-logo",
     },
     {
+      imgSrc:
+        "https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png",
+      altName: "redux-logo",
+    },
+    {
       imgSrc: "https://cdn-icons-png.flaticon.com/512/5968/5968672.png",
       altName: "bootstrap-logo",
     },
@@ -40,7 +46,10 @@ const LengLogos = () => {
     <>
       {logosData.map((item, idx) => {
         return (
-          <div className={item.altName} key={`logo-key-${idx}`}>
+          <div
+            className={`${!mobileScreen ? "mx-3" : "mx-5"} ${item.altName}`}
+            key={`logo-key-${idx}`}
+          >
             <img src={item.imgSrc} alt={item.altName} className="leng-logo" />
           </div>
         );

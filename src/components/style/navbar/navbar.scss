@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Rubik+Mono+One&display=swap");
 .main-nav {
-  // min-width: 99vw;
-  // height: 80px;
   background-color: #f2f1ef;
 }
 
@@ -40,6 +38,9 @@
     color: #f4775e;
     scale: 1.1;
   }
+  @media screen and (max-width: 600px) {
+    font-size: 4vw;
+  }
 }
 
 .user-nav-list {
@@ -49,4 +50,10 @@
     justify-content: space-around !important;
     align-items: center !important;
   }
+}
+
+.tel-link {
+  text-decoration: none !important;
+  color: #2d2e31 !important;
+  padding: 0 4px;
 }

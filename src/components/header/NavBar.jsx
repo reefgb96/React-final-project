@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "store/auth";
 import "../style/navbar/navbar.css";
 
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const dataFromToken = useSelector((state) => state.auth.userData);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  const mobileScreen = window.innerWidth >= 600;
   const logo = "<Reef Goldberg>";
-  const token = localStorage.getItem("token");
 
-  const handleLogOut = (ev) => {
-    const isStayLoggedIn = localStorage.getItem("stayLoggedin");
-    {
-      isStayLoggedIn ? ev.preventDefault() : localStorage.clear();
-    }
-    //fix log out, stay logged in, probably with Redux.
+  const handleLogOut = () => {
+    localStorage.clear();
+    dispatch(authActions.logout());
+    history.push("/");
   };
 
   return (
@@ -49,7 +54,7 @@ const NavBar = () => {
                 📑Contact
               </NavLink>
             </li>
-            {token && (
+            {dataFromToken && dataFromToken.biz && (
               <li className="nav-item">
                 <NavLink to="/my-cards" className="nav-link navbar-link">
                   📇My Cards
@@ -57,17 +62,28 @@ const NavBar = () => {
               </li>
             )}
           </ul>
-          <div className="user-nav mx-5">
+          <div className="user-nav mx-2">
             <ul className="navbar-nav user-nav-list  me-auto mb-2 mb-lg-0">
-              {!token && (
+              {!loggedIn ? (
+                <>
+                  <li className="nav-item">
+                    <Link to="/login" className="mx-2">
+                      <button className="nav-btns">Log in</button>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/register" className="mx-2">
+                      <button className="nav-btns">Register</button>
+                    </Link>
+                  </li>
+                </>
+              ) : (
                 <li className="nav-item">
-                  <Link to="/login" className="mx-2">
-                    <button className="nav-btns">Log in</button>
-                  </Link>
-                </li>
-              )}
-              {token && (
-                <li className="nav-item">
+                  {!mobileScreen || (
+                    <span className="fw-semibold">
+                      {"Welcome " + userInfo.name}
+                    </span>
+                  )}
                   <Link to="/login" className="mx-2">
                     <button onClick={handleLogOut} className="nav-btns">
                       Log out
@@ -75,11 +91,9 @@ const NavBar = () => {
                   </Link>
                 </li>
               )}
-              <li className="nav-item">
-                <Link to="/register" className="mx-2">
-                  <button className="nav-btns">Register</button>
-                </Link>
-              </li>
+              <a href="tel:+97238678345" className="tel-link nav-btns">
+                Call us!📞
+              </a>
             </ul>
           </div>
         </div>

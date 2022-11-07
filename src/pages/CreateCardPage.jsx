@@ -142,7 +142,7 @@ const CreateCardPage = () => {
             placeholder="08-4532662"
             value={bizCardData.phone}
             onChange={handleInputChange}
-            pattern="^0\d([\d]{0,1})([-]{0,1})\d{7}$"
+            // pattern="^0\d([\d]{0,1})([-]{0,1})\d{7}$"
           />
         </div>
         <div className="my-4 edit-input">

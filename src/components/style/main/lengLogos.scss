@@ -1,6 +1,8 @@
 .leng-logo {
   min-width: 3vw;
+  max-width: 3vw;
   @media screen and(max-width: 600px) {
     min-width: 6vw;
+    max-width: 6vw;
   }
 }

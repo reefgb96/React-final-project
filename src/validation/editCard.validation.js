@@ -5,7 +5,7 @@ const editCardSchema = {
   subTitle: Joi.string().min(1).max(100).required().label("Title"),
   description: Joi.string().min(1).max(100).required().label("Description"),
   address: Joi.string().min(1).max(100).required().label("Address"),
-  phone: Joi.string().min(1).max(10).required().label("Phone number"),
+  phone: Joi.string().min(9).max(10).required().label("Phone number"),
   url: Joi.string().min(1).max(1000).required().label("Image"),
 };
 

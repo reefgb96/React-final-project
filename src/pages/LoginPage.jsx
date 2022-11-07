@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-// import Joi from "joi-browser";
+import Joi from "joi-browser";
 import validate from "../validation/validation";
 import loginSchema from "../validation/login.validation";
-// import useAutoLogin from "../hooks/useAutoLogin";
+import useAutoLogin from "../hooks/useAutoLogin";
 import { Link, useHistory } from "react-router-dom";
 import "../components/style/pages/loginPage.css";
 
@@ -14,6 +15,8 @@ const LoginPage = () => {
     password: "",
     // stayLoggedIn: false,
   });
+  const autoLoginFunction = useAutoLogin();
+  const userInfo = useSelector((state) => state.auth.userInfo);
   const history = useHistory();
 
   const handleLoginInputChange = (ev) => {
@@ -64,7 +67,8 @@ const LoginPage = () => {
       .post("/users/login", loginInput)
       .then(async (res) => {
         localStorage.setItem("token", res.data.token);
-        // autoLoginFunction(res.data.token);
+        autoLoginFunction(res.data.token);
+        console.log();
         toast(`🦄 Logged in!`, {
           position: "top-right",
           autoClose: 2000,
@@ -74,9 +78,7 @@ const LoginPage = () => {
           draggable: true,
           progress: undefined,
         });
-        setTimeout(() => {
-          history.push("/my-cards");
-        }, 2000);
+        userInfo.biz ? history.push("/my-cards") : history.push("/");
       })
       .catch((err) => {
         console.log("err", err);

@@ -11,7 +11,6 @@ const RegisterPage = () => {
     emailInput: "",
     passwordInput: "",
     passwordInput2: "",
-    // profilePicInput: "",
     bizInput: false,
   });
 
@@ -32,7 +31,6 @@ const RegisterPage = () => {
   };
 
   const WrongPass = () => {
-    // ev.preventDefault();
     toast("🦄 Passwords dont match!", {
       position: "top-right",
       autoClose: 3000,
@@ -59,7 +57,6 @@ const RegisterPage = () => {
             email: registerInput.emailInput,
             password: registerInput.passwordInput,
             biz: registerInput.bizInput,
-            // profilePic: registerInput.profilePicInput,
           })
           .then((res) => {
             toast(`🦄Thank you for registering!`, {
@@ -77,7 +74,6 @@ const RegisterPage = () => {
             }, 2000);
           })
           .catch((err) => {
-            // console.log("err", err);
             toast(`🦄 ${err.response.data}!`, {
               position: "top-right",
               autoClose: 3000,
@@ -172,16 +168,6 @@ const RegisterPage = () => {
                   value={registerInput.passwordInput2}
                   onChange={handleUserInputChange}
                 />
-                {/* <label htmlFor="profilePicInput" className="form-label">
-                  Profile picture
-                </label>
-                <input
-                  className="form-control"
-                  type="file"
-                  id="profilePicInput"
-                  value={registerInput.profilePicInput}
-                  onChange={handleUserInputChange}
-                /> */}
               </div>
               <div className="my-5 form-check d-flex justify-content-between">
                 <div className="remember-me-check">

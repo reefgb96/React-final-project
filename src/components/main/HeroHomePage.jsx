@@ -7,7 +7,9 @@ const HeroHomePage = () => {
   const mobileScreen = window.innerWidth >= 600;
 
   return (
-    <div className={`container-fluid d-flex ${!mobileScreen || "px-5"}`}>
+    <div
+      className={`container-fluid wrapper d-flex ${!mobileScreen || "px-5"}`}
+    >
       <div className="hero-intro d-flex flex-column justify-content-evenly">
         <div
           className={`hero-title d-flex align-items-end h-50 ${
@@ -44,12 +46,23 @@ const HeroHomePage = () => {
         </div>
       </div>
       {mobileScreen && (
-        <div className="portrait">
-          <img
-            src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/311594293_10221872104893143_4290343528267491232_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=roIsgDz87R4AX9h-H0h&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfDEbNGurXlg_evwRxzjfyxkfeUD27n-7_jUcChc7oKyIw&oe=63602F76"
-            alt="Reef Goldberg"
-            className="img-fluid float-end hero-img flip-card-front"
-          />
+        <div className="main-container">
+          <div className="portrait">
+            <div className="card-back card-face">
+              <img
+                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/312978275_10221945850496737_175420262710632824_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=h99xM3hZDQcAX--QhGM&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfCShVPXYGv7sQgcgPpQnAj-J7oRqM63YD3pVhOs8AcEag&oe=636D2EE0"
+                alt="Reef Goldberg"
+                className="img-fluid hero-img"
+              />
+            </div>
+            <div className="card-front card-face">
+              <img
+                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/311594293_10221872104893143_4290343528267491232_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=roIsgDz87R4AX9h-H0h&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfDEbNGurXlg_evwRxzjfyxkfeUD27n-7_jUcChc7oKyIw&oe=63602F76"
+                alt="Reef Goldberg"
+                className="img-fluid hero-img"
+              />
+            </div>
+          </div>
         </div>
       )}
 

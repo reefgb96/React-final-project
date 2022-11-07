@@ -43,6 +43,11 @@
   color: #f4775e;
   scale: 1.1;
 }
+@media screen and (max-width: 600px) {
+  .nav-btns {
+    font-size: 4vw;
+  }
+}
 
 @media screen and (max-width: 600px) {
   .user-nav-list {
@@ -51,4 +56,10 @@
     justify-content: space-around !important;
     align-items: center !important;
   }
+}
+
+.tel-link {
+  text-decoration: none !important;
+  color: #2d2e31 !important;
+  padding: 0 4px;
 }/*# sourceMappingURL=navbar.css.map */
