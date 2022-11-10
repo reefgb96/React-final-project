@@ -64,7 +64,7 @@ const MyCardsPage = () => {
     <div className="d-flex flex-column align-items-center justify-content-center my-5">
       <div className="page-title w-100 d-flex flex-column align-items-center justify-content-center">
         <h1 className="text-dark mb-5">My Cards</h1>
-        <div className="wrapper d-flex justify-content-center align-items-center w-100 mb-4">
+        <div className=" d-flex justify-content-center align-items-center w-100 mb-4">
           <div className="find-input d-flex justify-content-end w-100">
             <input
               className="w-50"
@@ -105,6 +105,7 @@ const MyCardsPage = () => {
                 key={`card-key-${item._id}`}
                 moreInfoLink={item._id}
                 editCardLink={item._id}
+                displayBtnMoreInfo={true}
               />
             );
           })}

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import useAutoLogin from "../hooks/useAutoLogin";
 import { toast } from "react-toastify";
 import "../components/style/pages/registerPage.css";
 
 const RegisterPage = () => {
   const history = useHistory();
   const [registerInput, setRegisterInput] = useState({
-    nameInput: "",
     emailInput: "",
     passwordInput: "",
+    nameInput: "",
     passwordInput2: "",
     bizInput: false,
   });
+  const autoLoginFunction = useAutoLogin();
 
   const handleUserInputChange = (ev) => {
     let newRegisterInput = JSON.parse(JSON.stringify(registerInput));
@@ -59,21 +62,27 @@ const RegisterPage = () => {
             biz: registerInput.bizInput,
           })
           .then((res) => {
-            toast(`🦄Thank you for registering!`, {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            history.push("/reg-succuss");
             setTimeout(() => {
-              history.push("/login");
-            }, 2000);
+              axios
+                .post("/users/login", {
+                  email: registerInput.emailInput,
+                  password: registerInput.passwordInput,
+                })
+                .then((res) => {
+                  localStorage.setItem("token", res.data.token);
+                  autoLoginFunction(res.data.token);
+                  setTimeout(() => {
+                    let userInfo = jwt_decode(res.data.token);
+                    userInfo && userInfo.biz
+                      ? history.push("/createCard")
+                      : history.push("/");
+                  }, 100);
+                });
+            }, 1000);
           })
           .catch((err) => {
+            console.error(err);
             toast(`🦄 ${err.response.data}!`, {
               position: "top-right",
               autoClose: 3000,

@@ -7,6 +7,7 @@ const initialAuthState = {
   isAdmin: false,
   userData: null,
   userInfo: null,
+  stay: false,
 };
 
 const authSlice = createSlice({
@@ -16,22 +17,18 @@ const authSlice = createSlice({
   reducers: {
     login(state, action) {
       state.loggedIn = true;
-      // better to verify the payload
-      state.isAdmin = action.payload.isAdmin;
       state.userData = action.payload;
+      state.isAdmin = action.payload.isAdmin;
     },
-    /*
-        we will call this function when we logged out
-        to update redux "state" that the user logged out.
-        if we need to reset the state this is the simpler way
-    */
+
     logout: (state) => initialAuthState,
-    // logout(state) {
-    //   state.loggedIn = false;
-    //   state.userData = null;
-    // },
+
     updateUserInfo(state, action) {
       state.userInfo = action.payload;
+    },
+
+    stayLoggedIn: (state, action) => {
+      state.stay = action.payload;
     },
   },
 });

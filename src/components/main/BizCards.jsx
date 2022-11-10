@@ -14,6 +14,7 @@ const BizCards = ({
   itemKey,
   moreInfoLink,
   editCardLink,
+  displayBtnMoreInfo,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -23,16 +24,10 @@ const BizCards = ({
 
   const handleMouseOver = () => {
     setIsHovering(true);
-    // ev.target.closest(".col").children[1].classList.add("show");
-    // ev.target.closest(".col").children[2].classList.add("show");
-    // ev.target.closest(".card").classList.add("shadow");
   };
 
   const handleMouseOut = () => {
     setIsHovering(false);
-    // ev.target.closest(".col").children[1].classList.remove("show");
-    // ev.target.closest(".col").children[2].classList.remove("show");
-    // ev.target.closest(".card").classList.remove("shadow");
   };
 
   return (
@@ -66,13 +61,15 @@ const BizCards = ({
               <Link to={`/edit/${editCardLink}`} className="btn-link btn mx-2">
                 🖋 Edit
               </Link>
-              <Link
-                to={`/card/${moreInfoLink}`}
-                className="btn-link btn mx-2 my-2"
-                id={id}
-              >
-                ℹ More info
-              </Link>
+              {displayBtnMoreInfo && (
+                <Link
+                  to={`/card/${moreInfoLink}`}
+                  className="btn-link btn mx-2 my-2"
+                  id={id}
+                >
+                  ℹ More info
+                </Link>
+              )}
               <button className="btn-link btn mx-2" onClick={handleDeleteClick}>
                 X Delete
               </button>

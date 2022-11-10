@@ -19,6 +19,8 @@ import BizRegisterPage from "pages/BizRegisterPage";
 import MoreInfoPage from "pages/MoreInfoPage";
 import EditCardPage from "pages/EditCardPage";
 import CreateCardPage from "pages/CreateCardPage";
+import AdminPage from "pages/AdminPage";
+import RegSuccussPage from "pages/RegSuccuss";
 import updateUserInfo from "./services/updateUserInfo.js";
 import useAutoLogin from "./hooks/useAutoLogin";
 import AuthGuardRoute from "./components/main/AuthGuardRoute";
@@ -53,6 +55,7 @@ const App = () => {
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/about" component={AboutPage}></Route>
           <Route path="/contact" component={ContactPage}></Route>
+          <Route path="/reg-succuss" component={RegSuccussPage}></Route>
           <AuthGuardRoute
             path="/my-cards"
             component={MyCardsPage}
@@ -71,6 +74,10 @@ const App = () => {
           ></AuthGuardRoute>
           <Route path="/login" component={LoginPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>
+          <AdminGuardRoute
+            path="/admin"
+            component={AdminPage}
+          ></AdminGuardRoute>
         </Switch>
       )}
       <Footer />

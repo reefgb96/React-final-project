@@ -65,25 +65,6 @@ const HeroHomePage = () => {
           </div>
         </div>
       )}
-
-      {/* <div className="flip-card">
-        <div className="flip-card-inner">
-          <div className="flip-card-front">
-            <img src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/311594293_10221872104893143_4290343528267491232_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=roIsgDz87R4AX9h-H0h&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfDEbNGurXlg_evwRxzjfyxkfeUD27n-7_jUcChc7oKyIw&oe=63602F76" alt="Avatar" />
-          </div>
-          <div className="flip-card-back">
-            <h1>John Doe</h1>
-            <p>Architect & Engineer</p>
-            <p>We love that guy</p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <img
-        src="https://www.bleepstatic.com/content/hl-images/2022/07/07/man-in-hood-typing.jpg"
-        alt="Reef Goldberg programmer version"
-        className="img-fluid float-end hero-img"
-      /> */}
     </div>
   );
 };

@@ -9,12 +9,15 @@ const NavBar = () => {
   const history = useHistory();
   const loggedIn = useSelector((state) => state.auth.loggedIn);
   const dataFromToken = useSelector((state) => state.auth.userData);
+  const stayLoggedIn = useSelector((state) => state.auth.stay);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const mobileScreen = window.innerWidth >= 600;
   const logo = "<Reef Goldberg>";
 
   const handleLogOut = () => {
-    localStorage.clear();
+    {
+      !stayLoggedIn && localStorage.clear();
+    }
     dispatch(authActions.logout());
     history.push("/");
   };

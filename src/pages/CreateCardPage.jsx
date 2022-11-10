@@ -16,6 +16,7 @@ const CreateCardPage = () => {
     url: "",
   });
   const history = useHistory();
+  window.scrollTo(0, 0);
 
   const handleInputChange = (ev) => {
     let newBizCardData = JSON.parse(JSON.stringify(bizCardData));
@@ -72,16 +73,6 @@ const CreateCardPage = () => {
       );
     } catch (err) {
       console.log("err", err);
-      //   toast.error(err., {
-      //     position: "top-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //   });
-      //   return;
     }
   };
 

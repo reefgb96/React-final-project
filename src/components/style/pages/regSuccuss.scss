@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik+Mono+One&display=swap");
+
+.div-wrapper {
+  background-color: #2d2e31;
+  min-height: 80vh;
+  @media screen and(max-width: 600px) {
+    min-height: 55vh;
+  }
+}

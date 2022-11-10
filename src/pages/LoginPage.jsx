@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
-import Joi from "joi-browser";
 import validate from "../validation/validation";
 import loginSchema from "../validation/login.validation";
 import useAutoLogin from "../hooks/useAutoLogin";
 import { Link, useHistory } from "react-router-dom";
 import "../components/style/pages/loginPage.css";
+import { authActions } from "store/auth";
 
 const LoginPage = () => {
   const [loginInput, setLoginInput] = useState({
     email: "",
     password: "",
-    // stayLoggedIn: false,
   });
+  const dispatch = useDispatch();
   const autoLoginFunction = useAutoLogin();
-  const userInfo = useSelector((state) => state.auth.userInfo);
   const history = useHistory();
 
   const handleLoginInputChange = (ev) => {
@@ -26,12 +26,9 @@ const LoginPage = () => {
   };
 
   const handleStayLoggedIn = (ev) => {
-    let newLoginInput = JSON.parse(JSON.stringify(loginInput));
-    newLoginInput[ev.target.id] = ev.target.checked;
-    setLoginInput(newLoginInput);
     ev.target.checked
-      ? localStorage.setItem("stayLoggedin", true)
-      : localStorage.removeItem("stayLoggedin");
+      ? dispatch(authActions.stayLoggedIn(true))
+      : dispatch(authActions.stayLoggedIn(false));
   };
 
   const handleSubmitLogIn = (ev) => {
@@ -65,10 +62,15 @@ const LoginPage = () => {
     }
     axios
       .post("/users/login", loginInput)
-      .then(async (res) => {
+      .then((res) => {
         localStorage.setItem("token", res.data.token);
         autoLoginFunction(res.data.token);
-        console.log();
+        setTimeout(() => {
+          let userInfo = jwt_decode(res.data.token);
+          userInfo && userInfo.biz
+            ? history.push("/my-cards")
+            : history.push("/");
+        }, 100);
         toast(`🦄 Logged in!`, {
           position: "top-right",
           autoClose: 2000,
@@ -78,11 +80,10 @@ const LoginPage = () => {
           draggable: true,
           progress: undefined,
         });
-        userInfo.biz ? history.push("/my-cards") : history.push("/");
       })
       .catch((err) => {
-        console.log("err", err);
-        toast.error(`😭 Something went wrong ${err}`, {
+        console.error("error", err.response.data);
+        toast.error(`😭 Email or password are invalid.`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -143,7 +144,6 @@ const LoginPage = () => {
                     className=" form-check-input"
                     id="stayLoggedIn"
                     value=""
-                    checked={loginInput.stayLoggedIn}
                     onChange={handleStayLoggedIn}
                   />
                   <label
