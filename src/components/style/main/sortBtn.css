@@ -1,0 +1,21 @@
+@media screen and (max-width: 600px) {
+  .input-wrapper {
+    flex-direction: column;
+  }
+}
+
+.find-input {
+  min-width: 25vw !important;
+}
+@media screen and (max-width: 600px) {
+  .find-input {
+    min-width: 75vw !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sort-btn {
+    font-size: 3.5vw !important;
+    margin-top: 1vh;
+  }
+}/*# sourceMappingURL=sortBtn.css.map */

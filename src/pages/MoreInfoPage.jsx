@@ -55,6 +55,8 @@ const MoreInfoPage = () => {
             moreInfoLink={cardInfo._id}
             editCardLink={cardInfo._id}
             displayBtnMoreInfo={false}
+            displayBtnEdit={true}
+            displayBtnDelete={true}
           />
         )}
       </div>

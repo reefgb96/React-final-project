@@ -11,7 +11,6 @@ import Footer from "components/footer/Footer";
 import HomePage from "pages/HomePage";
 import AboutPage from "pages/AboutPage";
 import ContactPage from "pages/ContactPage";
-import SuccussStoriesPage from "pages/SuccussStoriesPage";
 import MyCardsPage from "pages/MyCardsPage";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";

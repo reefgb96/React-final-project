@@ -1,14 +1,22 @@
 import React from "react";
-import Welcome from "components/main/Welcome";
+import { useSelector } from "react-redux";
 import HeroHomePage from "components/main/HeroHomePage";
 import ExtProjects from "components/main/ExtProjects";
+import AllCards from "components/main/AllCards";
 
 const HomePage = () => {
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+
   return (
     <div>
-      {/* <Welcome /> */}
-      <HeroHomePage />
-      <ExtProjects />
+      {!loggedIn ? (
+        <>
+          <HeroHomePage />
+          <ExtProjects />
+        </>
+      ) : (
+        <AllCards />
+      )}
     </div>
   );
 };

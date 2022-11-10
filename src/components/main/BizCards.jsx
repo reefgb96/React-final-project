@@ -15,6 +15,8 @@ const BizCards = ({
   moreInfoLink,
   editCardLink,
   displayBtnMoreInfo,
+  displayBtnEdit,
+  displayBtnDelete,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -58,9 +60,14 @@ const BizCards = ({
             <div
               className={`card-btns w-100 text-center ${isHovering && "show"}`}
             >
-              <Link to={`/edit/${editCardLink}`} className="btn-link btn mx-2">
-                🖋 Edit
-              </Link>
+              {displayBtnEdit && (
+                <Link
+                  to={`/edit/${editCardLink}`}
+                  className="btn-link btn mx-2"
+                >
+                  🖋 Edit
+                </Link>
+              )}
               {displayBtnMoreInfo && (
                 <Link
                   to={`/card/${moreInfoLink}`}
@@ -70,9 +77,14 @@ const BizCards = ({
                   ℹ More info
                 </Link>
               )}
-              <button className="btn-link btn mx-2" onClick={handleDeleteClick}>
-                X Delete
-              </button>
+              {displayBtnDelete && (
+                <button
+                  className="btn-link btn mx-2"
+                  onClick={handleDeleteClick}
+                >
+                  X Delete
+                </button>
+              )}
             </div>
             <div className={`overlay  ${isHovering && "show"}`}></div>
           </div>

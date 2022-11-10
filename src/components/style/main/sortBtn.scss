@@ -1,0 +1,19 @@
+.input-wrapper {
+  @media screen and(max-width:600px) {
+    flex-direction: column;
+  }
+}
+
+.find-input {
+  min-width: 25vw !important;
+  @media screen and(max-width:600px) {
+    min-width: 75vw !important;
+  }
+}
+
+.sort-btn {
+  @media screen and(max-width:600px) {
+    font-size: 3.5vw !important;
+    margin-top: 1vh;
+  }
+}

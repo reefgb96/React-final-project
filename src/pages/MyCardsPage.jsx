@@ -31,10 +31,10 @@ const MyCardsPage = () => {
       }
     })();
   }, []);
+  let bizCardsDataCopy = JSON.parse(JSON.stringify(initialBizCardArray));
 
   useEffect(() => {
     let regex = new RegExp(findInput, "i");
-    let bizCardsDataCopy = JSON.parse(JSON.stringify(initialBizCardArray));
     bizCardsDataCopy = bizCardsDataCopy.filter((item) =>
       regex.test(item.title)
     );
@@ -46,12 +46,16 @@ const MyCardsPage = () => {
   };
 
   const handleBizCardDelete = (id) => {
-    console.log(initialBizCardArray);
     initialBizCardArray = initialBizCardArray.filter((item) => item._id !== id);
     setBizCardsData(initialBizCardArray);
-    console.log(bizCardsData);
     console.log(initialBizCardArray);
-    // change to DEL axios request to permanently delete from user data.
+    axios.delete(`/cards/${id}`);
+    // .then((res) => {
+    //   console.log(res);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   const handlePrint = useReactToPrint({
@@ -59,6 +63,24 @@ const MyCardsPage = () => {
     documentTitle: "no-data",
     onAfterPrint: () => alert("Printed"),
   });
+
+  const handleSortAsc = () => {
+    bizCardsDataCopy = bizCardsDataCopy.sort((a, b) => {
+      return a.title > b.title ? 1 : -1;
+    });
+    setBizCardsData(bizCardsDataCopy);
+  };
+
+  const handleSortDesc = () => {
+    bizCardsDataCopy = bizCardsDataCopy.sort((a, b) => {
+      return a.title > b.title ? -1 : 1;
+    });
+    setBizCardsData(bizCardsDataCopy);
+  };
+
+  const handleResetFilters = () => {
+    setBizCardsData(initialBizCardArray);
+  };
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center my-5">
@@ -73,6 +95,26 @@ const MyCardsPage = () => {
               onChange={handleFindInputChange}
               placeholder="Search..."
             />
+            <div className="sort-wrapper">
+              <button
+                className="sort-btn btn btn-dark mx-1"
+                onClick={handleSortAsc}
+              >
+                ⬆ Sort A-Z
+              </button>
+              <button
+                className="sort-btn btn btn-dark mx-1"
+                onClick={handleSortDesc}
+              >
+                ⬇ Sort Z-A
+              </button>
+              <button
+                className="sort-btn btn btn-dark mx-1"
+                onClick={handleResetFilters}
+              >
+                ❌ Reset
+              </button>
+            </div>
           </div>
           <div className="create-card-wrapper d-flex justify-content-end w-50">
             <Link
@@ -106,6 +148,8 @@ const MyCardsPage = () => {
                 moreInfoLink={item._id}
                 editCardLink={item._id}
                 displayBtnMoreInfo={true}
+                displayBtnEdit={true}
+                displayBtnDelete={true}
               />
             );
           })}
