@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import "../components/style/pages/myCards.css";
 import BizCards from "components/main/BizCards";
 
@@ -10,7 +10,13 @@ let initialBizCardArray = [];
 const MyCardsPage = () => {
   const [findInput, setFindInput] = useState("");
   const [bizCardsData, setBizCardsData] = useState([]);
+  let { search } = useLocation();
   const componentRef = useRef();
+  const history = useHistory();
+
+  const query = new URLSearchParams(search);
+  let q = query.get("q");
+  let sort = query.get("sort");
 
   useEffect(() => {
     (async () => {
@@ -31,18 +37,46 @@ const MyCardsPage = () => {
       }
     })();
   }, []);
-  let bizCardsDataCopy = JSON.parse(JSON.stringify(initialBizCardArray));
 
-  useEffect(() => {
+  const filterData = () => {
+    let bizCardsDataCopy = JSON.parse(JSON.stringify(initialBizCardArray));
     let regex = new RegExp(findInput, "i");
     bizCardsDataCopy = bizCardsDataCopy.filter((item) =>
       regex.test(item.title)
     );
     setBizCardsData(bizCardsDataCopy);
-  }, [findInput]);
+  };
 
   const handleFindInputChange = (ev) => {
     setFindInput(ev.target.value);
+    q = ev.target.value;
+    if (query.get("q")) {
+      query.delete("q");
+    }
+    query.append("q", q);
+    // history.push(`my-cards?${query.toString()}`);
+  };
+
+  const onEnter = (ev) => {
+    q = ev.target.value;
+    if (query.get("q")) {
+      query.delete("q");
+    }
+    query.append("q", q);
+    if (ev.key === "Enter") {
+      filterData();
+      history.push(`my-cards?${query.toString()}`);
+    }
+  };
+
+  const handleSearchClick = (ev) => {
+    filterData();
+    q = ev.target.value;
+    if (query.get("q")) {
+      query.delete("q");
+    }
+    query.append("q", q);
+    history.push(`my-cards?${query.toString()}`);
   };
 
   const handleBizCardDelete = (id) => {
@@ -50,12 +84,6 @@ const MyCardsPage = () => {
     setBizCardsData(initialBizCardArray);
     console.log(initialBizCardArray);
     axios.delete(`/cards/${id}`);
-    // .then((res) => {
-    //   console.log(res);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   };
 
   const handlePrint = useReactToPrint({
@@ -65,21 +93,37 @@ const MyCardsPage = () => {
   });
 
   const handleSortAsc = () => {
+    let bizCardsDataCopy = JSON.parse(JSON.stringify(bizCardsData));
     bizCardsDataCopy = bizCardsDataCopy.sort((a, b) => {
       return a.title > b.title ? 1 : -1;
     });
     setBizCardsData(bizCardsDataCopy);
+    sort = "asc";
+    if (query.get("sort")) {
+      query.delete("sort");
+    }
+    query.append("sort", sort);
+    history.push(`/my-cards?${query.toString()}`);
   };
 
   const handleSortDesc = () => {
+    let bizCardsDataCopy = JSON.parse(JSON.stringify(bizCardsData));
     bizCardsDataCopy = bizCardsDataCopy.sort((a, b) => {
       return a.title > b.title ? -1 : 1;
     });
     setBizCardsData(bizCardsDataCopy);
+    sort = "dec";
+    if (query.get("sort")) {
+      query.delete("sort");
+    }
+    query.append("sort", sort);
+    history.push(`/my-cards?${query.toString()}`);
   };
 
   const handleResetFilters = () => {
     setBizCardsData(initialBizCardArray);
+    setFindInput("");
+    history.push(`my-cards`);
   };
 
   return (
@@ -93,8 +137,12 @@ const MyCardsPage = () => {
               type="search"
               value={findInput}
               onChange={handleFindInputChange}
+              onKeyDown={onEnter}
               placeholder="Search..."
             />
+            <button onClick={handleSearchClick} className="btn btn-dark">
+              Search
+            </button>
             <div className="sort-wrapper">
               <button
                 className="sort-btn btn btn-dark mx-1"
@@ -131,28 +179,38 @@ const MyCardsPage = () => {
         className="container-fluid d-flex flex-wrap justify-content-center"
       >
         {bizCardsData &&
-          bizCardsData.map((item) => {
-            return (
-              <BizCards
-                name={item.title}
-                imgSrc={item.image.url}
-                imgAlt={item.image.alt}
-                subtitle={item.subTitle}
-                desc={item.description}
-                phone={item.phone}
-                address={item.address}
-                id={item._id}
-                onDelete={handleBizCardDelete}
-                // itemKey={`card-key-${item._id}`}
-                key={`card-key-${item._id}`}
-                moreInfoLink={item._id}
-                editCardLink={item._id}
-                displayBtnMoreInfo={true}
-                displayBtnEdit={true}
-                displayBtnDelete={true}
-              />
-            );
-          })}
+          bizCardsData
+            .filter((card) => (q ? card.title.toLowerCase().includes(q) : true))
+            .sort((a, b) => {
+              if (sort) {
+                if (sort === "asc") {
+                  return a.title > b.title ? 1 : -1;
+                } else {
+                  return a.title < b.title ? 1 : -1;
+                }
+              }
+            })
+            .map((item) => {
+              return (
+                <BizCards
+                  name={item.title}
+                  imgSrc={item.image.url}
+                  imgAlt={item.image.alt}
+                  subtitle={item.subTitle}
+                  desc={item.description}
+                  phone={item.phone}
+                  address={item.address}
+                  id={item._id}
+                  onDelete={handleBizCardDelete}
+                  key={`card-key-${item._id}`}
+                  moreInfoLink={item._id}
+                  editCardLink={item._id}
+                  displayBtnMoreInfo={true}
+                  displayBtnEdit={true}
+                  displayBtnDelete={true}
+                />
+              );
+            })}
       </div>
       <button className={`btn btn-dark print-btn mt-5`} onClick={handlePrint}>
         Print All 🖨

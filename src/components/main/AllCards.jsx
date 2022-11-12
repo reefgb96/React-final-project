@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import BizCards from "./BizCards";
 import "../style/main/sortBtn.css";
 
@@ -8,6 +8,12 @@ let initialBizCardArray = [];
 const AllCards = () => {
   const [cards, setCards] = useState(initialBizCardArray);
   const [findInput, setFindInput] = useState("");
+  const { search } = useLocation();
+  const history = useHistory();
+
+  const query = new URLSearchParams(search);
+  let q = query.get("q");
+  let sort = query.get("sort");
 
   useEffect(() => {
     (async () => {
@@ -27,10 +33,19 @@ const AllCards = () => {
     let regex = new RegExp(findInput, "i");
     CardsDataCopy = CardsDataCopy.filter((item) => regex.test(item.title));
     setCards(CardsDataCopy);
-  }, [findInput]);
+  }, [search]);
 
   const handleFindInputChange = (ev) => {
     setFindInput(ev.target.value);
+  };
+
+  const onEnter = (ev) => {
+    q = ev.target.value;
+    ev.key === "Enter" && history.push(`/?q=${q}`);
+  };
+  const handleSearchClick = () => {
+    q = findInput;
+    history.push(`/?q=${q}`);
   };
 
   const handleSortAsc = () => {
@@ -49,6 +64,8 @@ const AllCards = () => {
 
   const handleResetFilters = () => {
     setCards(CardsDataCopy);
+    setFindInput("");
+    history.push(`/`);
   };
 
   return (
@@ -62,8 +79,12 @@ const AllCards = () => {
               type="search"
               value={findInput}
               onChange={handleFindInputChange}
+              onKeyDown={onEnter}
               placeholder="Search..."
             />
+            <button onClick={handleSearchClick} className="btn btn-dark">
+              Search
+            </button>
           </div>
           <div className="sort-wrapper">
             <button

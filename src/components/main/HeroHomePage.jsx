@@ -50,15 +50,15 @@ const HeroHomePage = () => {
           <div className="portrait">
             <div className="card-back card-face">
               <img
-                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/312978275_10221945850496737_175420262710632824_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=h99xM3hZDQcAX--QhGM&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfCShVPXYGv7sQgcgPpQnAj-J7oRqM63YD3pVhOs8AcEag&oe=636D2EE0"
+                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/312978275_10221945850496737_175420262710632824_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=K3s3smk-OigAX8k_GUb&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfAlUSrnEOVbXsLujuEE53ZV4W3j_Wnfofk7G57ZMpYcuA&oe=637517E0"
                 alt="Reef Goldberg"
                 className="img-fluid hero-img"
               />
             </div>
             <div className="card-front card-face">
               <img
-                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/311594293_10221872104893143_4290343528267491232_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=roIsgDz87R4AX9h-H0h&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfDEbNGurXlg_evwRxzjfyxkfeUD27n-7_jUcChc7oKyIw&oe=63602F76"
-                alt="Reef Goldberg"
+                src="https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/311594293_10221872104893143_4290343528267491232_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=dvKep02rFMwAX_SgNX2&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfAeQt1YnzrU69hABT5tj0JNrkotJ3mv7VWKswVOCDPZUQ&oe=6373F5F6"
+                alt="Programmer"
                 className="img-fluid hero-img"
               />
             </div>
