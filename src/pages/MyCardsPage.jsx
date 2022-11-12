@@ -54,7 +54,6 @@ const MyCardsPage = () => {
       query.delete("q");
     }
     query.append("q", q);
-    // history.push(`my-cards?${query.toString()}`);
   };
 
   const onEnter = (ev) => {
