@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import useAutoLogin from "../hooks/useAutoLogin";
 import { toast } from "react-toastify";
 import "../components/style/pages/registerPage.css";
+import Forms from "components/main/Forms";
 
 const RegisterPage = () => {
   const history = useHistory();
@@ -16,6 +17,8 @@ const RegisterPage = () => {
     bizInput: false,
   });
   const autoLoginFunction = useAutoLogin();
+  const isPassMatch =
+    registerInput.passwordInput === registerInput.passwordInput2;
 
   const handleUserInputChange = (ev) => {
     let newRegisterInput = JSON.parse(JSON.stringify(registerInput));
@@ -51,9 +54,8 @@ const RegisterPage = () => {
     handleRegister();
   };
 
-  const handleRegister = (ev) => {
-    registerInput &&
-    registerInput.passwordInput === registerInput.passwordInput2
+  const handleRegister = () => {
+    registerInput && isPassMatch
       ? axios
           .post("/users/register", {
             name: registerInput.nameInput,
@@ -111,98 +113,7 @@ const RegisterPage = () => {
             </div>
           )}
           <div className="col container-login d-flex justify-content-center ">
-            <form
-              className="login-form w-50 m-4 p-5 border bg-light"
-              onSubmit={handleSubmitRegister}
-            >
-              <div className="form-title d-flex justify-content-center">
-                <h1 className="mb-5 fw-semibold">Sign Up</h1>
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="nameInput"
-                  className="mb-3 form-label name-label"
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  className="mb-5 form-control name-input"
-                  id="nameInput"
-                  aria-describedby="emailHelp"
-                  value={registerInput.nameInput}
-                  onChange={handleUserInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="emailInput"
-                  className="mb-3 form-label email-label"
-                >
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  className="mb-5 form-control email-input"
-                  id="emailInput"
-                  aria-describedby="emailHelp"
-                  value={registerInput.emailInput}
-                  onChange={handleUserInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="passwordInput"
-                  className="form-label pass-label"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="mt-2 mb-5 form-control pass-input"
-                  id="passwordInput"
-                  value={registerInput.passwordInput}
-                  onChange={handleUserInputChange}
-                />
-                <label
-                  htmlFor="passwordInput2"
-                  className="form-label pass-label"
-                >
-                  Repeat Password
-                </label>
-                <input
-                  type="password"
-                  className="mt-2 mb-5 form-control pass-input"
-                  id="passwordInput2"
-                  value={registerInput.passwordInput2}
-                  onChange={handleUserInputChange}
-                />
-              </div>
-              <div className="my-5 form-check d-flex justify-content-between">
-                <div className="remember-me-check">
-                  <input
-                    type="checkbox"
-                    className=" form-check-input"
-                    id="bizInput"
-                    value=""
-                    checked={registerInput.bizInput}
-                    onChange={handleCheckBoxInputChange}
-                  />
-                  <label
-                    className=" form-check-label justify-self-start"
-                    htmlFor="bizInput"
-                  >
-                    Register as business account?
-                  </label>
-                </div>
-              </div>
-
-              <div className="form-btns d-flex flex-column justify-content-between">
-                <button type="submit" className="mt-5 mb-4 w-50 form-send-btn">
-                  Sign up
-                </button>
-              </div>
-            </form>
+            <Forms />
           </div>
         </div>
       </div>
@@ -211,3 +122,98 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+{
+  /* <form
+  className="login-form w-50 m-4 p-5 border bg-light"
+  onSubmit={handleSubmitRegister}
+>
+  <div className="form-title d-flex justify-content-center">
+    <h1 className="mb-5 fw-semibold">Sign Up</h1>
+  </div>
+  <div className="mb-3">
+    <label
+      htmlFor="nameInput"
+      className="mb-3 form-label name-label"
+    >
+      Full Name
+    </label>
+    <input
+      type="text"
+      className="mb-5 form-control name-input"
+      id="nameInput"
+      aria-describedby="emailHelp"
+      value={registerInput.nameInput}
+      onChange={handleUserInputChange}
+    />
+  </div>
+  <div className="mb-3">
+    <label
+      htmlFor="emailInput"
+      className="mb-3 form-label email-label"
+    >
+      Email address
+    </label>
+    <input
+      type="email"
+      className="mb-5 form-control email-input"
+      id="emailInput"
+      aria-describedby="emailHelp"
+      value={registerInput.emailInput}
+      onChange={handleUserInputChange}
+    />
+  </div>
+  <div className="mb-3">
+    <label
+      htmlFor="passwordInput"
+      className="form-label pass-label"
+    >
+      Password
+    </label>
+    <input
+      type="password"
+      className="mt-2 mb-5 form-control pass-input"
+      id="passwordInput"
+      value={registerInput.passwordInput}
+      onChange={handleUserInputChange}
+    />
+    <label
+      htmlFor="passwordInput2"
+      className="form-label pass-label"
+    >
+      Repeat Password
+    </label>
+    <input
+      type="password"
+      className="mt-2 mb-5 form-control pass-input"
+      id="passwordInput2"
+      value={registerInput.passwordInput2}
+      onChange={handleUserInputChange}
+    />
+  </div>
+  <div className="my-5 form-check d-flex justify-content-between">
+    <div className="remember-me-check">
+      <input
+        type="checkbox"
+        className=" form-check-input"
+        id="bizInput"
+        value=""
+        checked={registerInput.bizInput}
+        onChange={handleCheckBoxInputChange}
+      />
+      <label
+        className=" form-check-label justify-self-start"
+        htmlFor="bizInput"
+      >
+        Register as business account?
+      </label>
+    </div>
+  </div>
+
+  <div className="form-btns d-flex flex-column justify-content-between">
+    <button type="submit" className="mt-5 mb-4 w-50 form-send-btn">
+      Sign up
+    </button>
+  </div>
+</form> */
+}

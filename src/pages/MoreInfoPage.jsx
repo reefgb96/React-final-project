@@ -1,43 +1,46 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import React, { useRef } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import useFetch from "hooks/useFetch";
+import { useReactToPrint } from "react-to-print";
 import { toast } from "react-toastify";
 import BizCards from "components/main/BizCards";
 import "../components/style/pages/moreInfoPage.css";
 
 let initialCardData = [];
 const MoreInfoPage = () => {
-  const [cardInfo, setCardInfo] = useState(initialCardData);
   let { id } = useParams();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        let { data } = await axios.get(`/cards/card/${id}`);
-        initialCardData = data;
-        setCardInfo(initialCardData);
-      } catch {
-        toast.error("😭 Something went wrong", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
-    })();
-  }, []);
+  const { data: cardInfo } = useFetch(`/cards/card/${id}`);
+  const history = useHistory();
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "no-data",
+    onAfterPrint: () =>
+      toast.success("🦄 Printed!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }),
+  });
 
   let dateCreated = cardInfo.createdAt;
   dateCreated = dateCreated?.replaceAll("-", "/").slice(0, 10);
 
   return (
     <>
-      <Link to="/my-cards" className="btn-back m-2">
+      <button
+        onClick={() => {
+          history.goBack();
+        }}
+        className="btn-back m-2"
+      >
         ⬅ Go back
-      </Link>
+      </button>
       <div className="d-flex flex-column align-items-center justify-content-center p-5">
         <h1 className="mb-5">Business Card: {cardInfo.title}</h1>
         <h5 className="mb-5">Created at: {dateCreated}</h5>
@@ -57,8 +60,13 @@ const MoreInfoPage = () => {
             displayBtnMoreInfo={false}
             displayBtnEdit={true}
             displayBtnDelete={true}
+            forwardRef={componentRef}
+            hover={false}
           />
         )}
+        <button className={`btn btn-dark print-btn mt-5`} onClick={handlePrint}>
+          Print 🖨
+        </button>
       </div>
     </>
   );

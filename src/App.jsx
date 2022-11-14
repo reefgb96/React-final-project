@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.scss";
-import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "./store/auth";
-import jwt_decode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "components/header/NavBar";
 import "./components/style/Global/global.css";
@@ -12,7 +10,7 @@ import HomePage from "pages/HomePage";
 import AboutPage from "pages/AboutPage";
 import ContactPage from "pages/ContactPage";
 import MyCardsPage from "pages/MyCardsPage";
-import LoginPage from "pages/LoginPage";
+import LoginPage2 from "pages/LoginPage2";
 import RegisterPage from "pages/RegisterPage";
 import BizRegisterPage from "pages/BizRegisterPage";
 import MoreInfoPage from "pages/MoreInfoPage";
@@ -71,7 +69,7 @@ const App = () => {
             path="/createCard"
             component={CreateCardPage}
           ></AuthGuardRoute>
-          <Route path="/login" component={LoginPage}></Route>
+          <Route path="/login" component={LoginPage2}></Route>
           <Route path="/register" component={RegisterPage}></Route>
           <AdminGuardRoute
             path="/admin"
