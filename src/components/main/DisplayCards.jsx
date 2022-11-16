@@ -14,7 +14,7 @@ const DisplayCards = ({
   displayBtnEdit,
   displayBtnDelete,
 }) => {
-  let { data: bizCardsData, setData: setBizCardsData } = useFetch(url);
+  let { data: bizCardsData, setData: setBizCardsData } = useFetch();
   let { search } = useLocation();
   const componentRef = useRef();
   const history = useHistory();

@@ -3,11 +3,13 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ValidateErr from "components/main/ValidateErr";
+import useFetch from "hooks/useFetch";
 import { toast } from "react-toastify";
 import useAutoLogin from "../../hooks/useAutoLogin";
 import { authActions } from "store/auth";
 import loginSchema from "../../validation/login.validation";
 import jwt_decode from "jwt-decode";
+import { useEffect } from "react";
 
 const Forms = () => {
   const [loginInput, setLoginInput] = useState({
@@ -17,10 +19,14 @@ const Forms = () => {
     name: "",
     bizInput: false,
   });
+  const [trySubmit, setTrySubmit] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const autoLoginFunction = useAutoLogin();
   let currLocation = history.location.pathname === "/register";
+  let userLocation = history.location.pathname;
+  // const fetchData = useFetch(userLocation);
+  console.log(userLocation);
 
   const handleLoginInputChange = (ev) => {
     let newLoginInput = JSON.parse(JSON.stringify(loginInput));
@@ -46,9 +52,39 @@ const Forms = () => {
       theme: "light",
     });
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let { data } = await useFetch(userLocation, {
+          email: loginInput.email,
+          password: loginInput.password,
+        });
+        console.log("Succuss");
+        // localStorage.setItem("token", data.token);
+        // autoLoginFunction(data.token);
+        // setTimeout(() => {
+        //   let userInfo = jwt_decode(data.token);
+        //   userInfo && userInfo.biz
+        //     ? history.push("/my-cards")
+        //     : history.push("/");
+        // }, 100);
+      } catch (err) {
+        // console.error("error", err.response.data);
+        toast.error(`😭 Email or password are invalid.`, err, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          progress: undefined,
+        });
+        // history.push("/login");
+      }
+    };
+    fetchData();
+  }, [trySubmit]);
 
   const handleSubmitLogIn = (ev) => {
     ev.preventDefault();
+    setTrySubmit(true);
     ValidateErr(
       {
         email: loginInput.email,
@@ -56,37 +92,38 @@ const Forms = () => {
       },
       loginSchema
     );
-    axios
-      .post("/users/login", {
-        email: loginInput.email,
-        password: loginInput.password,
-      })
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        autoLoginFunction(res.data.token);
-        setTimeout(() => {
-          let userInfo = jwt_decode(res.data.token);
-          userInfo && userInfo.biz
-            ? history.push("/my-cards")
-            : history.push("/");
-        }, 100);
-        toast(`🦄 Logged in!`, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      })
-      .catch((err) => {
-        console.error("error", err.response.data);
-        toast.error(`😭 Email or password are invalid.`, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          progress: undefined,
-        });
-        WrongPass();
-      });
+
+    // axios
+    //   .post("/users/login", {
+    //     email: loginInput.email,
+    //     password: loginInput.password,
+    //   })
+    //   .then((res) => {
+    //     localStorage.setItem("token", res.data.token);
+    //     autoLoginFunction(res.data.token);
+    //     setTimeout(() => {
+    //       let userInfo = jwt_decode(res.data.token);
+    //       userInfo && userInfo.biz
+    //         ? history.push("/my-cards")
+    //         : history.push("/");
+    //     }, 100);
+    //     toast(`🦄 Logged in!`, {
+    //       position: "top-right",
+    //       autoClose: 2000,
+    //       hideProgressBar: false,
+    //       progress: undefined,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.error("error", err.response.data);
+    //     toast.error(`😭 Email or password are invalid.`, {
+    //       position: "top-right",
+    //       autoClose: 2000,
+    //       hideProgressBar: false,
+    //       progress: undefined,
+    //     });
+    //     WrongPass();
+    //   });
   };
 
   return (

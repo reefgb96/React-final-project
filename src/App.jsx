@@ -49,7 +49,11 @@ const App = () => {
       <ToastContainer />
       {!tryToLogin && (
         <Switch>
-          <Route path="/" exact component={HomePage}></Route>
+          <Route
+            path={loggedIn ? "/cards" : "/"}
+            exact
+            component={HomePage}
+          ></Route>
           <Route path="/about" component={AboutPage}></Route>
           <Route path="/contact" component={ContactPage}></Route>
           <Route path="/reg-succuss" component={RegSuccussPage}></Route>

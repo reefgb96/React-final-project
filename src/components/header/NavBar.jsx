@@ -25,7 +25,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-md sticky-top border-bottom main-nav">
       <div className="container-fluid container-wrapper">
-        <NavLink to="/" className="navbar-brand">
+        <NavLink to={loggedIn ? "/cards" : "/"} className="navbar-brand">
           <h1 className="site-logo">{logo}</h1>
         </NavLink>
         <button
@@ -43,7 +43,10 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink to="/" className="nav-link navbar-link">
+              <NavLink
+                to={loggedIn ? "/cards" : "/"}
+                className="nav-link navbar-link"
+              >
                 🏠Home
               </NavLink>
             </li>
