@@ -22,10 +22,10 @@ const Forms = () => {
   const [trySubmit, setTrySubmit] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-  const autoLoginFunction = useAutoLogin();
+  // const autoLoginFunction = useAutoLogin();
   let currLocation = history.location.pathname === "/register";
   let userLocation = history.location.pathname;
-  // const fetchData = useFetch(userLocation);
+  const fetchData = useFetch();
   console.log(userLocation);
 
   const handleLoginInputChange = (ev) => {
@@ -52,38 +52,43 @@ const Forms = () => {
       theme: "light",
     });
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let { data } = await useFetch(userLocation, {
-          email: loginInput.email,
-          password: loginInput.password,
-        });
-        console.log("Succuss");
-        // localStorage.setItem("token", data.token);
-        // autoLoginFunction(data.token);
-        // setTimeout(() => {
-        //   let userInfo = jwt_decode(data.token);
-        //   userInfo && userInfo.biz
-        //     ? history.push("/my-cards")
-        //     : history.push("/");
-        // }, 100);
-      } catch (err) {
-        // console.error("error", err.response.data);
-        toast.error(`😭 Email or password are invalid.`, err, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          progress: undefined,
-        });
-        // history.push("/login");
-      }
-    };
-    fetchData();
-  }, [trySubmit]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       let { data } = await useFetch(userLocation, {
+  //         email: loginInput.email,
+  //         password: loginInput.password,
+  //       });
+  //       console.log("Succuss");
+  //       // localStorage.setItem("token", data.token);
+  //       // autoLoginFunction(data.token);
+  //       // setTimeout(() => {
+  //       //   let userInfo = jwt_decode(data.token);
+  //       //   userInfo && userInfo.biz
+  //       //     ? history.push("/my-cards")
+  //       //     : history.push("/");
+  //       // }, 100);
+  //     } catch (err) {
+  //       // console.error("error", err.response.data);
+  //       toast.error(`😭 Email or password are invalid.`, err, {
+  //         position: "top-right",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         progress: undefined,
+  //       });
+  //       // history.push("/login");
+  //     }
+  //   };
+  //   fetchData();
+  // }, [trySubmit]);
 
   const handleSubmitLogIn = (ev) => {
     ev.preventDefault();
+    fetchData({
+      email: loginInput.email,
+      password: loginInput.password,
+    });
     setTrySubmit(true);
     ValidateErr(
       {
